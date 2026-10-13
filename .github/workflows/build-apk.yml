@@ -23,8 +23,10 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Check Android SDK (already on the runner)
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
 
       - name: Install packages
         run: npm install
@@ -73,6 +75,9 @@ jobs:
               }
           }
           GRADLE
+
+      - name: Point Gradle to the Android SDK
+        run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
 
       - name: Build APK
         env:
