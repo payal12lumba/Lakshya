@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -95,3 +98,12 @@ jobs:
         with:
           name: Lakshya-APK
           path: Lakshya.apk
+
+      - name: Publish it under Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.${{ github.run_number }}
+          name: Lakshya 1.${{ github.run_number }}
+          body: Download Lakshya.apk below and install it over the old app (don't uninstall first).
+          files: Lakshya.apk
+          make_latest: true
