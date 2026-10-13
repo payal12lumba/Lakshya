@@ -1,0 +1,92 @@
+name: Build Lakshya APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install packages
+        run: npm install
+
+      - name: Copy the web app into www/
+        run: npm run web
+
+      - name: Add Android platform
+        run: npx cap add android
+
+      - name: Put in the Lakshya icon and splash screen
+        run: |
+          if [ -f resources/icon-only.png ]; then
+            npx capacitor-assets generate --android --splashBackgroundColor '#F6F3FA'
+          else
+            echo "resources/ folder not found - using default icon"
+          fi
+
+      - name: Copy web app into Android
+        run: npx cap sync android
+
+      - name: Same signing key and a new version number every build
+        run: |
+          mkdir -p keystore
+          echo "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" | base64 -d > keystore/lakshya.jks
+          cat >> android/app/build.gradle <<'GRADLE'
+
+          android {
+              signingConfigs {
+                  lakshya {
+                      storeFile file("../../keystore/lakshya.jks")
+                      storePassword "lakshya2026"
+                      keyAlias "lakshya"
+                      keyPassword "lakshya2026"
+                  }
+              }
+              defaultConfig {
+                  versionCode Integer.parseInt(System.getenv("VCODE") ?: "1")
+                  versionName "1." + (System.getenv("VCODE") ?: "1")
+              }
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.lakshya
+                      minifyEnabled false
+                  }
+              }
+          }
+          GRADLE
+
+      - name: Build APK
+        env:
+          VCODE: ${{ github.run_number }}
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Rename APK
+        run: cp android/app/build/outputs/apk/release/app-release.apk Lakshya.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lakshya-APK
+          path: Lakshya.apk
