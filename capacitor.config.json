@@ -1,0 +1,9 @@
+{
+  "appId": "com.lakshya.prep",
+  "appName": "Lakshya",
+  "webDir": "www",
+  "backgroundColor": "#F6F3FA",
+  "android": {
+    "backgroundColor": "#F6F3FA"
+  }
+}
