@@ -3,6 +3,6 @@
   "appName": "Lakshya",
   "webDir": "www",
   "android": {
-    "backgroundColor": "#F6F3FA"
+    "backgroundColor": "#F3F5F8"
   }
 }
