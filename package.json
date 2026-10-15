@@ -1,18 +1,17 @@
 {
   "name": "lakshya",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Lakshya \u2014 day-wise placement prep tracker (13 Oct \u2013 3 Nov 2026)",
+  "description": "Lakshya — placement prep tracker (date-wise plan + area/course/extra checklists)",
   "scripts": {
-    "build": "npm run web",
-    "web": "mkdir -p www && cp index.html www/index.html"
+    "sync": "npx cap sync android"
   },
   "dependencies": {
-    "@capacitor/android": "6.1.2",
-    "@capacitor/core": "6.1.2"
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0"
   },
   "devDependencies": {
-    "@capacitor/assets": "3.0.5",
-    "@capacitor/cli": "6.1.2"
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.2.0"
   }
 }
